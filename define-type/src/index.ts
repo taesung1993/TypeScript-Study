@@ -1,35 +1,32 @@
-
-/* name: string과 id:number을 포함하는 추론 타입을 가진 객체를 생성하는 예제 */
-interface User{
-    name: string;
-    id: number;
+interface squareConfig{
+    color?: string;
+    width?: number;
 }
 
-/* 새로운 객체가 인터페이스 형태를 따르고 있다. */
-/*  객체 선언 형태
-const user:User = {
-    name: "Mason Yun",
-    id: 0,
-//  nickname: "mason" => 형식에 맞지 않으므로 경고를 준다.
+interface returnConfig{
+    color: string;
+    area: number;
 }
-*/
 
-/* 클래스로도 선언할 수 있다. */
-class UserAccount {
-    name: string;
-    id: number;
+interface Point{
+    readonly x: number;
+    readonly y: number;
+}
 
-    constructor(name: string, id:number){
-        this.name = name;
-        this.id = id;
+const createSquare = (config: squareConfig): returnConfig => {
+    let newSquare = {color: "white", area: 100};
+
+    if(config.color){
+        newSquare.color = config.color;
     }
+    if(config.width){
+        newSquare.area = config.width * config.width;
+    }
+
+    return newSquare;
 }
 
-const getUserInfo = (user: User):string => `Hello, my name is ${user.name}`;
-
-const user:User = new UserAccount("Mason Yun", 0);
-
-console.log(getUserInfo(user));
-
-
-
+let mySquare = createSquare({color: "block"} as squareConfig);
+const myPoint: Point = {x:10, y:20};
+console.log('myPoint는 readonly로 속성을 할당하면, 할당 후 에는 수정할 수 없다.');
+console.log(`새로 생성된 mySquare: ${JSON.stringify(mySquare)}`);
